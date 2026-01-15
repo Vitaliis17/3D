@@ -3,7 +3,7 @@ using System;
 
 public class InputReader : MonoBehaviour
 {
-    private InputSystem _inputSystem;
+    public InputSystem InputSystem { get; private set; }
 
     private Vector2 _moveValue;
     private Vector2 _lookValue;
@@ -13,15 +13,18 @@ public class InputReader : MonoBehaviour
 
     private void Awake()
     {
-        _inputSystem = new();
-        _inputSystem.Player.Enable();
+        InputSystem = new();
+        InputSystem.Player.Enable();
     }
+
+    private void OnDisable()
+        => InputSystem.Player.Disable();
 
     private void FixedUpdate()
     {
-        _moveValue = _inputSystem.Player.Move.ReadValue<Vector2>();
-        _lookValue = _inputSystem.Player.Look.ReadValue<Vector2>();
-        
+        _moveValue = InputSystem.Player.Move.ReadValue<Vector2>();
+        _lookValue = InputSystem.Player.Look.ReadValue<Vector2>();
+
         if (_moveValue != Vector2.zero)
             MovePerformed?.Invoke(_moveValue);
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class CursorLockSetter : MonoBehaviour
 {
     private void Awake()
         => Cursor.lockState = CursorLockMode.Locked;
