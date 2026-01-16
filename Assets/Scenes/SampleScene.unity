@@ -540,6 +540,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &836252535
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 836252536}
+  - component: {fileID: 836252537}
+  m_Layer: 0
+  m_Name: Sword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &836252536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 836252535}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1405616411}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &836252537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 836252535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ad1a46236b7414c83b04c57c0cd20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Sword
+  _weaponData: {fileID: 11400000, guid: 16b5500365a4c7642b63a1941f32a3d6, type: 2}
 --- !u!1 &882498988
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,7 +687,7 @@ GameObject:
   - component: {fileID: 1405616408}
   - component: {fileID: 1405616407}
   - component: {fileID: 1405616412}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -770,6 +815,7 @@ Transform:
   m_Children:
   - {fileID: 330585546}
   - {fileID: 1839306842}
+  - {fileID: 836252536}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1405616412
@@ -787,6 +833,7 @@ MonoBehaviour:
   _reader: {fileID: 882498989}
   _data: {fileID: 11400000, guid: 5618bdb3f90262240878066f6e24528b, type: 2}
   _rotaterData: {fileID: 11400000, guid: 01f363d66150bb043bbdf14cbf2b90e9, type: 2}
+  _sword: {fileID: 836252537}
   _groundChecker: {fileID: 1839306843}
 --- !u!1 &1839306841
 GameObject:
