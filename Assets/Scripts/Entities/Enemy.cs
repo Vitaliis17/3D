@@ -1,6 +1,13 @@
+using System;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IHasHealth
+[RequireComponent(typeof(Collider), typeof(Rigidbody))]
+public class Enemy : Entity, ISpawnable
 {
-    public Health Health { get; private set; }
+    [SerializeField] private Sword _sword;
+
+    public event Action<ISpawnable> Releasing;
+
+    protected override void Die()
+        => Releasing?.Invoke(this);
 }

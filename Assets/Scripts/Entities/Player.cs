@@ -2,12 +2,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Player : MonoBehaviour, IHasHealth
+public class Player : Entity
 {
-    [SerializeField] private InputReader _reader;
-
-    [SerializeField] private PlayerData _data;
     [SerializeField] private RotaterData _rotaterData;
+
+    [SerializeField] private InputReader _reader;
 
     [SerializeField] private Sword _sword;
 
@@ -19,40 +18,38 @@ public class Player : MonoBehaviour, IHasHealth
 
     private Rigidbody _rigidbody;
 
-    public Health Health { get; private set; }
-
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.freezeRotation = true;
 
-        _mover = new(_data.Speed, _rigidbody);
+        _mover = new(Data.Speed, _rigidbody);
         _rotater = new(_rotaterData.SensitivityY, _rotaterData.MaxRotationX, _rotaterData.MinRotationX);
-        _jumper = new(_rigidbody, _data.JumpForce);
-
-        Health = new(_data.MaxHealth);
+        _jumper = new(_rigidbody, ((PlayerData)Data).JumpForce);
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+
         _reader.MovePerformed += _mover.Move;
         _reader.LookPerformed += RotateX;
 
         _reader.InputSystem.Player.Jump.performed += Jump;
         _reader.InputSystem.Player.Attack.performed += Attack;
-
-        Health.Died += () => Destroy(gameObject);
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
+
         _reader.MovePerformed -= _mover.Move;
         _reader.LookPerformed -= RotateX;
 
         _reader.InputSystem.Player.Jump.performed -= Jump;
         _reader.InputSystem.Player.Attack.performed -= Attack;
-
-        Health.Died -= () => Destroy(gameObject);
     }
 
     private void RotateX(Vector2 direction)

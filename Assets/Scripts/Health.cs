@@ -13,8 +13,6 @@ public class Health
     {
         _minValue = 0;
         _maxValue = maxValue;
-
-        SetFullValue();
     }
 
     public void TakeDamage(int damage)
