@@ -11,10 +11,10 @@ public class Sword : MonoBehaviour
 
     public void Attack()
     {
-        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _weaponData.Distance))
-        {
-            Health health = hit.transform.GetComponent<IHasHealth>().Health;
-            _attacker.Attack(health);
-        }
+        if (TryReadRaycastHit(out RaycastHit hit) && hit.transform.TryGetComponent(out IHasHealth healthObject))
+            _attacker.Attack(healthObject.Health);
     }
+
+    private bool TryReadRaycastHit(out RaycastHit hit)
+        => Physics.Raycast(transform.position, transform.forward, out hit, _weaponData.Distance);
 }
