@@ -8,7 +8,7 @@ public class Player : Entity
 
     [SerializeField] private InputReader _reader;
 
-    [SerializeField] private Sword _sword;
+    [SerializeField] private Weapon _weapon;
 
     [SerializeField] private ZoneChecker _groundChecker;
 
@@ -64,5 +64,5 @@ public class Player : Entity
     }
 
     private void Attack(InputAction.CallbackContext context)
-        => _sword.Attack();
+        => _weapon.Attack();
 }

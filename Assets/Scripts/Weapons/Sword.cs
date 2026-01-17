@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class Sword : MonoBehaviour
+public class Sword : Weapon
 {
-    [SerializeField] private WeaponData _weaponData;
+    [SerializeField] private MeleeWeaponData _weaponData;
 
     private Attacker _attacker;
 
     private void Awake()
         => _attacker = new(_weaponData.Damage);
 
-    public void Attack()
+    public override void Attack()
     {
         if (TryReadRaycastHit(out RaycastHit hit) && hit.transform.TryGetComponent(out IHasHealth healthObject))
             _attacker.Attack(healthObject.Health);

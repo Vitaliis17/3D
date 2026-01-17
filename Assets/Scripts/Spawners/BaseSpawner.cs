@@ -11,7 +11,7 @@ public abstract class BaseSpawner<T> : MonoBehaviour where T : Component, ISpawn
     protected virtual void Awake()
         => _pool = new(CreateElement, GetElement, ReleaseElement, DestroyElement);
 
-    public T Get(Vector3 position)
+    public virtual T Get(Vector3 position)
     {
         T element = _pool.Get();
 
@@ -21,7 +21,7 @@ public abstract class BaseSpawner<T> : MonoBehaviour where T : Component, ISpawn
         return element;
     }
 
-    protected void Release(ISpawnable spawnableObject)
+    protected virtual void Release(ISpawnable spawnableObject)
     {
         if (spawnableObject is T element)
         {

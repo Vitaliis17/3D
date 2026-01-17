@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
-public class WeaponData : ScriptableObject
+[CreateAssetMenu(fileName = "MeleeData", menuName = "Weapon/Melee")]
+public class MeleeWeaponData : ScriptableObject
 {
     [SerializeField, Min(0)] private int _damage;
     [SerializeField, Min(0)] private float _distance;
