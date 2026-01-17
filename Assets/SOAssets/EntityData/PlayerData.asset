@@ -14,4 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerData
   _speed: 4
   _maxHealth: 50
+  _takingDistance: 7
+  _takingLayer:
+    serializedVersion: 2
+    m_Bits: 128
   _jumpForce: 250

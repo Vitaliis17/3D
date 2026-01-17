@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   _speed: 3
   _maxHealth: 15
+  _takingDistance: 2
+  _takingLayer:
+    serializedVersion: 2
+    m_Bits: 128

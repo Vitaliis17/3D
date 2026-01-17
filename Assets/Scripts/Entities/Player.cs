@@ -6,10 +6,9 @@ public class Player : Entity
 {
     [SerializeField] private RotaterData _rotaterData;
 
+    [SerializeField] private Taker _taker;
+
     [SerializeField] private InputReader _reader;
-
-    [SerializeField] private Weapon _weapon;
-
     [SerializeField] private ZoneChecker _groundChecker;
 
     private Mover _mover;
@@ -39,6 +38,7 @@ public class Player : Entity
 
         _reader.InputSystem.Player.Jump.performed += Jump;
         _reader.InputSystem.Player.Attack.performed += Attack;
+        _reader.InputSystem.Player.Take.performed += Take;
     }
 
     protected override void OnDisable()
@@ -50,6 +50,7 @@ public class Player : Entity
 
         _reader.InputSystem.Player.Jump.performed -= Jump;
         _reader.InputSystem.Player.Attack.performed -= Attack;
+        _reader.InputSystem.Player.Take.performed -= Take;
     }
 
     private void RotateX(Vector2 direction)
@@ -64,5 +65,21 @@ public class Player : Entity
     }
 
     private void Attack(InputAction.CallbackContext context)
-        => _weapon.Attack();
+        => _taker.Attack();
+
+    private void Take(InputAction.CallbackContext context)
+    {
+        Camera camera = Camera.main;
+
+        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, Data.TakingDistance, Data.TakingLayer))
+        {
+            Debug.Log("FirstIf");
+            if (hit.collider.TryGetComponent(out Weapon weapon))
+            {
+                Debug.Log("SecondIf");
+
+                _taker.Take(weapon);
+            }
+        }
+    }
 }
