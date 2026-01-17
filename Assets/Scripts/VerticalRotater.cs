@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class VerticalRotater : MonoBehaviour
 {
     [SerializeField] private RotaterData _rotaterData;
     [SerializeField] private InputReader _inputReader;

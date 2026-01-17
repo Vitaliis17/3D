@@ -610,6 +610,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3799487250039513282, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
+      propertyPath: _inputReader
+      value: 
+      objectReference: {fileID: 882498989}
     - target: {fileID: 7357755634749257090, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
       propertyPath: _inputReader
       value: 
