@@ -102,4 +102,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ad1a46236b7414c83b04c57c0cd20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sword
+  _data: {fileID: 11400000, guid: 06ad45e1685195a4a8570197cd97c74d, type: 2}
   _weaponData: {fileID: 11400000, guid: 16b5500365a4c7642b63a1941f32a3d6, type: 2}

@@ -69,17 +69,9 @@ public class Player : Entity
 
     private void Take(InputAction.CallbackContext context)
     {
-        Camera camera = Camera.main;
+        Ray ray = new(Camera.main.transform.position, Camera.main.transform.forward);
 
-        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, Data.TakingDistance, Data.TakingLayer))
-        {
-            Debug.Log("FirstIf");
-            if (hit.collider.TryGetComponent(out Weapon weapon))
-            {
-                Debug.Log("SecondIf");
-
-                _taker.Take(weapon);
-            }
-        }
+        if (Physics.Raycast(ray, out RaycastHit hit, Data.TakingDistance, Data.TakingLayer) && hit.collider.TryGetComponent(out Weapon weapon))
+            _taker.Take(weapon);
     }
 }

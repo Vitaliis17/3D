@@ -9,7 +9,7 @@ public class Taker : MonoBehaviour
     public void Take(Weapon weapon)
     {
         _weapon = weapon;
-        weapon.transform.SetParent(_container);
+        _weapon.SetParent(_container);
     }
 
     public void Attack()

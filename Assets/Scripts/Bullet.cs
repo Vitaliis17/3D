@@ -25,6 +25,7 @@ public class Bullet : MonoBehaviour, ISpawnable
 
     private void OnEnable()
     {
+        Rigidbody.linearVelocity = Vector3.zero;
         StartTimer();
 
         _timer.TimeOvered += Die;

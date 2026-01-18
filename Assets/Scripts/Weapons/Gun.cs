@@ -10,7 +10,7 @@ public class Gun : Weapon, ISpawnable, IShootable
 
     public override void Attack()
     {
-        Bullet bullet = Shooting?.Invoke(transform.position + _weaponData.Offset);
-        bullet.Rigidbody.AddForce(Vector3.forward * _weaponData.ForceShooting);
+        Bullet bullet = Shooting?.Invoke(transform.position + transform.forward * transform.localScale.z + _weaponData.Offset);
+        bullet.Rigidbody.AddForce(transform.forward * _weaponData.ForceShooting);
     }
 }
