@@ -2,32 +2,51 @@ using System;
 
 public class Health
 {
-    private readonly int _maxValue;
     private readonly int _minValue;
-
+    
+    private int _maxValue;
     private int _currentValue;
+
+    public event Action<int> MaxValueChanged;
+    public event Action<int> CurrentValueChanged;
 
     public event Action Died;
 
     public Health(int maxValue)
     {
         _minValue = 0;
-        _maxValue = maxValue;
+
+        SetMax(maxValue);
     }
 
     public void TakeDamage(int damage)
     {
-        int nextValue = _currentValue - damage;
-
-        _currentValue = nextValue < _minValue ? _minValue : nextValue;
+        SetCurrent(_currentValue - damage);
 
         if (IsAlive() == false)
             Died?.Invoke();
     }
 
     public void SetFullValue()
-        => _currentValue = _maxValue;
+    {
+        MaxValueChanged?.Invoke(_maxValue);
+        SetCurrent(_maxValue);
+    }
 
-    private bool IsAlive()
+        private bool IsAlive()
         => _currentValue > _minValue;
+
+    private void SetCurrent(int value)
+    {
+        _currentValue = value < _minValue ? _minValue : value;
+
+        CurrentValueChanged?.Invoke(_currentValue);
+    }
+
+    private void SetMax(int maxValue)
+    {
+        _maxValue = maxValue;
+
+        MaxValueChanged?.Invoke(_maxValue);
+    }
 }

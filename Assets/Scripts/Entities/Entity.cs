@@ -21,6 +21,9 @@ public abstract class Entity : MonoBehaviour, IHasHealth
     protected virtual void OnDisable()
         => Health.Died -= Die;
 
+    protected void Start()
+        => Health.SetFullValue();
+
     protected virtual void Die()
         => Destroy(gameObject);
 }
