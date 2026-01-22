@@ -48,12 +48,13 @@ public class Player : Entity
         _reader.MovePerformed += Move;
         _reader.LookPerformed += RotateX;
 
-        _reader.InputSystem.Player.Run.performed += Run;
+        _reader.InputSystem.Player.Run.started += Run;
 
         _reader.InputSystem.Player.Run.canceled += StopRunning;
         _reader.InputSystem.Player.Run.canceled += RestoreStamina;
 
         Stamina.Expired += RestoreStamina;
+        Stamina.Expired += _runner.DeactivateRunning;
 
         _reader.InputSystem.Player.Jump.started += Jump;
         _reader.InputSystem.Player.Attack.started += Attack;
@@ -67,12 +68,13 @@ public class Player : Entity
         _reader.MovePerformed -= Move;
         _reader.LookPerformed -= RotateX;
 
-        _reader.InputSystem.Player.Run.performed -= Run;
+        _reader.InputSystem.Player.Run.started -= Run;
 
         _reader.InputSystem.Player.Run.canceled -= StopRunning;
         _reader.InputSystem.Player.Run.canceled -= RestoreStamina;
 
         Stamina.Expired -= RestoreStamina;
+        Stamina.Expired -= _runner.DeactivateRunning;
 
         _reader.InputSystem.Player.Jump.started -= Jump;
         _reader.InputSystem.Player.Attack.started -= Attack;
