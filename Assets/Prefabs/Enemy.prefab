@@ -285,7 +285,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b1143c74681824ba3af42595faeee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Looker
-  _targer: {fileID: 0}
 --- !u!1001 &5775235350192015397
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -382,12 +381,25 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1167640823862957841, guid: 11f9dfb05c8c18346af6a6639ebcdeed, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495036231906254141, guid: 11f9dfb05c8c18346af6a6639ebcdeed, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8824525341958765943, guid: 11f9dfb05c8c18346af6a6639ebcdeed, type: 3}
       propertyPath: m_Name
       value: HealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 9081994466193926407, guid: 11f9dfb05c8c18346af6a6639ebcdeed, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4495036231906254141, guid: 11f9dfb05c8c18346af6a6639ebcdeed, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11f9dfb05c8c18346af6a6639ebcdeed, type: 3}

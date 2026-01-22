@@ -6,5 +6,5 @@ public class Attacker
         => _damage = damage;
 
     public void Attack(Health health)
-        => health.TakeDamage(_damage);
+        => health.SubtractValue(_damage);
 }

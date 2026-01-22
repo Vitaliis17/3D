@@ -15,13 +15,13 @@ public abstract class Entity : MonoBehaviour, IHasHealth
     {
         Health.SetFullValue();
 
-        Health.Died += Die;
+        Health.Expired += Die;
     }
 
     protected virtual void OnDisable()
-        => Health.Died -= Die;
+        => Health.Expired -= Die;
 
-    protected void Start()
+    protected virtual void Start()
         => Health.SetFullValue();
 
     protected virtual void Die()

@@ -48,7 +48,7 @@ public class Bullet : MonoBehaviour, ISpawnable
     }
 
     private void StartTimer()
-        => _coroutine = StartCoroutine(_timer.StartTimer(_data.LifeTime));
+        => _coroutine = StartCoroutine(_timer.Wait(_data.LifeTime));
 
     private void Die()
         => Releasing?.Invoke(this);

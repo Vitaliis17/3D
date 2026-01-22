@@ -19,3 +19,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _jumpForce: 250
+  _maxTimeRunning: 5
+  _runningSpeedMultiplier: 3
+  _maxStamina: 100
+  _returningStamina: 1
+  _wastingStamina: 1

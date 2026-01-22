@@ -3,7 +3,7 @@ using UnityEngine;
 public class HealthPresenter : MonoBehaviour 
 {
     [SerializeField] private Entity _entity;
-    [SerializeField] private HealthView _view;
+    [SerializeField] private BarView _view;
 
     private void OnEnable()
     {
