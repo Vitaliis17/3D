@@ -12,13 +12,10 @@ public class Player : Entity
     [SerializeField] private InputReader _reader;
     [SerializeField] private ZoneChecker _groundChecker;
 
+    [SerializeField] private Mover _mover;
+
     private Rotater _rotater;
     private Jumper _jumper;
-
-    private IMoveable _moveable;
-
-    private Walker _walker;
-    private Runner _runner;
 
     private Rigidbody _rigidbody;
     private Coroutine _coroutine;
@@ -38,11 +35,7 @@ public class Player : Entity
         _jumper = new(_rigidbody, data.JumpForce);
 
         Stamina = new(data.MaxStamina, data.ReturningStamina);
-
-        _walker = new(data.Speed, _rigidbody);
-        _runner = new(Stamina, data.Speed * data.RunningSpeedMultiplier, _rigidbody, data.WastingStamina);
-
-        _moveable = _walker;
+        _mover.Initialize(Stamina, _rigidbody);
     }
 
     protected override void OnEnable()
@@ -51,40 +44,28 @@ public class Player : Entity
 
         Stamina.SetFullValue();
 
-        _reader.MovePerformed += Move;
         _reader.LookPerformed += RotateX;
 
-        _reader.InputSystem.Player.Run.started += StartRunning;
+        _reader.StartedJumping += Jump;
+        _reader.StartedAttacking += _taker.Attack;
+        _reader.StartedTaking += Take;
 
-        _reader.InputSystem.Player.Run.canceled += StopRunning;
-        _reader.InputSystem.Player.Run.canceled += RestoreStamina;
-
-        Stamina.Expired += RestoreStamina;
-        Stamina.Expired += StopRunning;
-
-        _reader.InputSystem.Player.Jump.started += Jump;
-        _reader.InputSystem.Player.Attack.started += Attack;
-        _reader.InputSystem.Player.Take.started += Take;
+        _mover.StartingRunning += StopCoroutine;
+        _mover.StoppingRunning += RestoreStamina;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
 
-        _reader.MovePerformed -= Move;
         _reader.LookPerformed -= RotateX;
 
-        _reader.InputSystem.Player.Run.started -= StartRunning;
+        _reader.StartedJumping -= Jump;
+        _reader.StartedAttacking -= _taker.Attack;
+        _reader.StartedTaking -= Take;
 
-        _reader.InputSystem.Player.Run.canceled -= StopRunning;
-        _reader.InputSystem.Player.Run.canceled -= RestoreStamina;
-
-        Stamina.Expired -= RestoreStamina;
-        Stamina.Expired -= StopRunning;
-
-        _reader.InputSystem.Player.Jump.started -= Jump;
-        _reader.InputSystem.Player.Attack.started -= Attack;
-        _reader.InputSystem.Player.Take.started -= Take;
+        _mover.StartingRunning -= StopCoroutine;
+        _mover.StoppingRunning -= RestoreStamina;
     }
 
     protected override void Start()
@@ -94,18 +75,10 @@ public class Player : Entity
         Stamina.SetFullValue();
     }
 
-    private void Move(Vector2 direction)
-    {
-        if (_moveable == _runner)
-            StopCoroutine();
-
-        _moveable.Move(direction);
-    }
-
     private void RotateX(Vector2 direction)
         => _rotater.RotateX(transform, direction);
 
-    private void Jump(InputAction.CallbackContext context)
+    private void Jump()
     {
         if (_groundChecker.ReadCollider().Length == 0)
             return;
@@ -113,28 +86,13 @@ public class Player : Entity
         _jumper.Jump();
     }
 
-    private void Attack(InputAction.CallbackContext context)
-        => _taker.Attack();
-
-    private void Take(InputAction.CallbackContext context)
+    private void Take()
     {
         Ray ray = new(_camera.position, _camera.forward);
 
         if (Physics.Raycast(ray, out RaycastHit hit, Data.TakingDistance, Data.TakingLayer) && hit.collider.TryGetComponent(out Weapon weapon))
             _taker.Take(weapon);
     }
-
-    private void StartRunning(InputAction.CallbackContext context)
-        => _moveable = _runner;
-
-    private void StopRunning(InputAction.CallbackContext context)
-        => StopRunning();
-
-    private void StopRunning()
-        => _moveable = _walker;
-
-    private void RestoreStamina(InputAction.CallbackContext context)
-        => RestoreStamina();
 
     private void RestoreStamina()
     {

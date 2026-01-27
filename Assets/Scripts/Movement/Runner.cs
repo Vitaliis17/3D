@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class Runner : IMoveable
 {
@@ -15,18 +14,11 @@ public class Runner : IMoveable
         Transform = rigidbody.transform;
 
         _wastingStamina = wastingStamina;
-
-        DeactivateRunning();
     }
 
     public float Speed { get; }
     public Rigidbody Rigidbody { get; }
     public Transform Transform { get; }
-
-    public bool IsRunning { get; private set; }
-
-    public void DeactivateRunning()
-        => IsRunning = false;
 
     public void Move(Vector2 direction)
     {
@@ -34,21 +26,5 @@ public class Runner : IMoveable
         Rigidbody.MovePosition(Rigidbody.position + localDirection);
 
         _stamina.SubtractValue(_wastingStamina);
-    }
-
-    public IEnumerator WasteStamina(Stamina stamina)
-    {
-        IsRunning = true;
-
-        WaitForFixedUpdate waiting = new();
-
-        while (stamina.IsCurrentExpere() == false)
-        {
-            stamina.SubtractValue(_wastingStamina);
-
-            yield return waiting;
-        }
-
-        DeactivateRunning();
     }
 }

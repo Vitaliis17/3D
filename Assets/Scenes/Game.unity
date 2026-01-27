@@ -714,6 +714,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3292978284014442288, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
   m_PrefabInstance: {fileID: 4057587535582288882}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1720247868 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2209140155479874855, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
+  m_PrefabInstance: {fileID: 4057587535582288882}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1720247875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720247868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d2bff37a490e3b448ae00032b1037d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Mover
+  _walkingData: {fileID: 11400000, guid: 20e6461c7df32d943a4c483089e7dc0a, type: 2}
+  _runningData: {fileID: 11400000, guid: 3856b5bd1db4e8549a090764e57304ee, type: 2}
+  _reader: {fileID: 882498989}
 --- !u!1001 &4057587535582288882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -803,6 +823,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 198726643}
     - target: {fileID: 7479157593969766499, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
+      propertyPath: _mover
+      value: 
+      objectReference: {fileID: 1720247875}
+    - target: {fileID: 7479157593969766499, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
       propertyPath: _taker
       value: 
       objectReference: {fileID: 198726643}
@@ -833,6 +857,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 232420540}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2209140155479874855, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1720247875}
     - targetCorrespondingSourceObject: {fileID: 889749070670915568, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
       insertIndex: -1
       addedObject: {fileID: 198726643}
