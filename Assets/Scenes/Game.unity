@@ -709,6 +709,11 @@ Transform:
   - {fileID: 785815037}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1715737643 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3292978284014442288, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
+  m_PrefabInstance: {fileID: 4057587535582288882}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4057587535582288882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -777,6 +782,14 @@ PrefabInstance:
       propertyPath: _inputReader
       value: 
       objectReference: {fileID: 882498989}
+    - target: {fileID: 6504860477841644172, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6504860477841644172, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7016759951342594580, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 122.17999
@@ -793,6 +806,10 @@ PrefabInstance:
       propertyPath: _taker
       value: 
       objectReference: {fileID: 198726643}
+    - target: {fileID: 7479157593969766499, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
+      propertyPath: _camera
+      value: 
+      objectReference: {fileID: 1715737643}
     - target: {fileID: 7479157593969766499, guid: 6d0cfbd0f2f8b434bb31c67a065563be, type: 3}
       propertyPath: _reader
       value: 

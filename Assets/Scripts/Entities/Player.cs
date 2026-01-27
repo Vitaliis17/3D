@@ -12,9 +12,12 @@ public class Player : Entity
     [SerializeField] private InputReader _reader;
     [SerializeField] private ZoneChecker _groundChecker;
 
-    private Mover _mover;
     private Rotater _rotater;
     private Jumper _jumper;
+
+    private IMoveable _moveable;
+
+    private Walker _walker;
     private Runner _runner;
 
     private Rigidbody _rigidbody;
@@ -31,12 +34,15 @@ public class Player : Entity
 
         PlayerData data = Data as PlayerData;
 
-        _mover = new(data.Speed, _rigidbody);
         _rotater = new(_rotaterData.SensitivityY, _rotaterData.MaxRotationX, _rotaterData.MinRotationX);
         _jumper = new(_rigidbody, data.JumpForce);
-        _runner = new(data.WastingStamina, data.RunningSpeedMultiplier, data.MaxTimeRunning);
 
         Stamina = new(data.MaxStamina, data.ReturningStamina);
+
+        _walker = new(data.Speed, _rigidbody);
+        _runner = new(Stamina, data.Speed * data.RunningSpeedMultiplier, _rigidbody, data.WastingStamina);
+
+        _moveable = _walker;
     }
 
     protected override void OnEnable()
@@ -48,13 +54,13 @@ public class Player : Entity
         _reader.MovePerformed += Move;
         _reader.LookPerformed += RotateX;
 
-        _reader.InputSystem.Player.Run.started += Run;
+        _reader.InputSystem.Player.Run.started += StartRunning;
 
         _reader.InputSystem.Player.Run.canceled += StopRunning;
         _reader.InputSystem.Player.Run.canceled += RestoreStamina;
 
         Stamina.Expired += RestoreStamina;
-        Stamina.Expired += _runner.DeactivateRunning;
+        Stamina.Expired += StopRunning;
 
         _reader.InputSystem.Player.Jump.started += Jump;
         _reader.InputSystem.Player.Attack.started += Attack;
@@ -68,13 +74,13 @@ public class Player : Entity
         _reader.MovePerformed -= Move;
         _reader.LookPerformed -= RotateX;
 
-        _reader.InputSystem.Player.Run.started -= Run;
+        _reader.InputSystem.Player.Run.started -= StartRunning;
 
         _reader.InputSystem.Player.Run.canceled -= StopRunning;
         _reader.InputSystem.Player.Run.canceled -= RestoreStamina;
 
         Stamina.Expired -= RestoreStamina;
-        Stamina.Expired -= _runner.DeactivateRunning;
+        Stamina.Expired -= StopRunning;
 
         _reader.InputSystem.Player.Jump.started -= Jump;
         _reader.InputSystem.Player.Attack.started -= Attack;
@@ -86,6 +92,14 @@ public class Player : Entity
         base.Start();
 
         Stamina.SetFullValue();
+    }
+
+    private void Move(Vector2 direction)
+    {
+        if (_moveable == _runner)
+            StopCoroutine();
+
+        _moveable.Move(direction);
     }
 
     private void RotateX(Vector2 direction)
@@ -110,28 +124,14 @@ public class Player : Entity
             _taker.Take(weapon);
     }
 
-    private void Move(Vector2 direction)
-    {
-        const float BaseSpeedMultiplier = 1f;
-
-        float speedMultiplier = _runner.IsRunning ? _runner.SpeedMultiplier : BaseSpeedMultiplier;
-
-        _mover.Move(direction, speedMultiplier);
-    }
-
-    private void Run(InputAction.CallbackContext context)
-    {
-        StopCoroutine();
-
-        _coroutine = StartCoroutine(_runner.WasteStamina(Stamina));
-    }
+    private void StartRunning(InputAction.CallbackContext context)
+        => _moveable = _runner;
 
     private void StopRunning(InputAction.CallbackContext context)
-    {
-        StopCoroutine();
+        => StopRunning();
 
-        _runner.DeactivateRunning();
-    }
+    private void StopRunning()
+        => _moveable = _walker;
 
     private void RestoreStamina(InputAction.CallbackContext context)
         => RestoreStamina();
