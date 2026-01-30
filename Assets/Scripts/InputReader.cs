@@ -14,6 +14,7 @@ public class InputReader : MonoBehaviour
 
     public event Action StartedRunning;
     public event Action StoppedRunning;
+    public event Action StoppedMoving;
 
     public event Action StartedJumping;
     public event Action StartedAttacking;
@@ -29,6 +30,8 @@ public class InputReader : MonoBehaviour
         _inputSystem.Player.Run.started += StartRunning;
         _inputSystem.Player.Run.canceled += StopRunning;
 
+        _inputSystem.Player.Move.canceled += StopMoving;
+
         _inputSystem.Player.Jump.started += StartJumping;
         _inputSystem.Player.Attack.started += StartAttacking;
         _inputSystem.Player.Take.started += StartTaking;
@@ -40,6 +43,8 @@ public class InputReader : MonoBehaviour
 
         _inputSystem.Player.Run.started -= StartRunning;
         _inputSystem.Player.Run.canceled -= StopRunning;
+
+        _inputSystem.Player.Move.canceled -= StopMoving;
 
         _inputSystem.Player.Jump.started -= StartJumping;
         _inputSystem.Player.Attack.started -= StartAttacking;
@@ -60,6 +65,9 @@ public class InputReader : MonoBehaviour
         if (_lookValue.sqrMagnitude != 0)
             LookPerformed?.Invoke(_lookValue);
     }
+
+    private void StopMoving(InputAction.CallbackContext context)
+        => StoppedMoving?.Invoke();
 
     private void StartRunning(InputAction.CallbackContext context)
         => StartedRunning?.Invoke();

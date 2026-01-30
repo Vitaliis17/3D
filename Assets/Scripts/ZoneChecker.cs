@@ -6,7 +6,7 @@ public class ZoneChecker : MonoBehaviour
     [SerializeField] private LayerMask _layerMask;
     
     private BoxCollider _collider;
-
+    
     private void Awake()
     {
         _collider = GetComponent<BoxCollider>();

@@ -1,10 +1,12 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class Player : Entity
 {
-    [SerializeField] private Transform _camera;
+    [SerializeField] private PlayerAnimationData _playerAnimationData;
     [SerializeField] private RotaterData _rotaterData;
+
+    [SerializeField] private Transform _camera;
 
     [SerializeField] private Taker _taker;
 
@@ -17,6 +19,9 @@ public class Player : Entity
     private Jumper _jumper;
 
     private Rigidbody _rigidbody;
+    private Animator _animator;
+
+    private AnimationController _animationController;
     private Coroutine _coroutine;
 
     public Stamina Stamina { get; private set; }
@@ -27,6 +32,9 @@ public class Player : Entity
 
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.freezeRotation = true;
+
+        _animator = GetComponent<Animator>();
+        _animationController = new(_animator, _playerAnimationData);
 
         PlayerData data = Data as PlayerData;
 
@@ -50,7 +58,12 @@ public class Player : Entity
         _reader.StartedTaking += Take;
 
         _mover.StartingRunning += StopCoroutine;
+        _mover.StartingRunning += _animationController.PlayRunning;
+
         _mover.StoppingRunning += RestoreStamina;
+        _mover.StoppingRunning += _animationController.PlayWalking;
+
+        _reader.StoppedMoving += _animationController.PlayIdle;
     }
 
     protected override void OnDisable()
@@ -64,7 +77,12 @@ public class Player : Entity
         _reader.StartedTaking -= Take;
 
         _mover.StartingRunning -= StopCoroutine;
+        _mover.StartingRunning -= _animationController.PlayRunning;
+
         _mover.StoppingRunning -= RestoreStamina;
+        _mover.StoppingRunning -= _animationController.PlayWalking;
+
+        _reader.StoppedMoving -= _animationController.PlayIdle;
     }
 
     protected override void Start()

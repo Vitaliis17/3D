@@ -20,6 +20,7 @@ public class Mover : MonoBehaviour
 
     private void OnEnable()
     {
+        _reader.StoppedMoving += StopRunning;
         _reader.MovePerformed += Move;
 
         _reader.StartedRunning += StartRunning;
@@ -30,6 +31,8 @@ public class Mover : MonoBehaviour
 
     private void OnDisable()
     {
+        _reader.StoppedMoving -= StopRunning;
+
         _reader.MovePerformed -= Move;
 
         _reader.StartedRunning -= StartRunning;
